@@ -1,6 +1,7 @@
 """CSV -> SQLite ingestion and safe read-only querying."""
 import sqlite3
 import pandas as pd
+import re
 
 DB_PATH = "tickets.db"
 CSV_PATH = "support_tickets.csv"
@@ -54,7 +55,7 @@ def run_query(sql: str):
     low = clean.lower()
     if not low.startswith("select"):
         raise ValueError("Only SELECT queries are allowed.")
-    if any(bad in low for bad in _FORBIDDEN):
+    if any(re.search(rf"\b{kw}\b", low) for kw in _FORBIDDEN):
         raise ValueError("Query contains a forbidden keyword.")
     if ";" in clean:
         raise ValueError("Multiple statements are not allowed.")
