@@ -51,7 +51,7 @@ You need Python 3.10+ and a free Groq API key (https://console.groq.com).
 ```bash
 pip install -r requirements.txt
 cp .env.example .env        # then paste your key into .env
-uvicorn main:app --reload
+uvicorn main:app
 ```
 
 The CSV gets loaded into SQLite automatically when the server starts, so there's
